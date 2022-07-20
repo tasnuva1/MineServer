@@ -41,5 +41,3 @@ function start() {
     });
   });
 }
-
-// testing
