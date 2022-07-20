@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "bedrock-protocol": "^3.12.0",
-    "mineflayer": "^4.3.0"
+    "mineflayer": "^4.3.0",
+    "throng": "^5.0.0"
   }
 }
