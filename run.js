@@ -1,5 +1,7 @@
 const bedrock = require("bedrock-protocol");
 const throng = require("throng");
+const express = require("express");
+const app = express();
 
 const WORKERS = process.env.WEB_CONCURRENCY || 1;
 
@@ -19,19 +21,23 @@ const client = bedrock.createClient({
 });
 
 function start() {
-  client.on("text", (packet) => {
-    // Listen for chat messages and echo them back.
-    if (packet.source_name != client.options.username) {
-      client.queue("text", {
-        type: "chat",
-        needs_translation: false,
-        source_name: client.username,
-        xuid: "",
-        platform_chat_id: "",
-        message: `${packet.source_name} said: ${
-          packet.message
-        } on ${new Date().toLocaleString()}`,
-      });
-    }
+  app.listen(3001, "0.0.0.0", () => {
+    console.log("Server is running.");
+
+    client.on("text", (packet) => {
+      // Listen for chat messages and echo them back.
+      if (packet.source_name != client.options.username) {
+        client.queue("text", {
+          type: "chat",
+          needs_translation: false,
+          source_name: client.username,
+          xuid: "",
+          platform_chat_id: "",
+          message: `${packet.source_name} said: ${
+            packet.message
+          } on ${new Date().toLocaleString()}`,
+        });
+      }
+    });
   });
 }
